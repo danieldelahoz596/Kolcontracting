@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">W9 Form</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    <iframe src="" type="application/pdf" width="100%" height="500px" style="overflow: auto;">
+    </iframe>
+  </p>
+  <p>
+    <label>Sign Here</label><br />
+    <signature-pad [options]="signaturePadOptions" (onEndEvent)="drawComplete()"></signature-pad>
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="onClose()">Close</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="submitDisabled">Submit</button>
+</div>

@@ -1,0 +1,152 @@
+<div class="right-icon-wrp">
+  <div class="event-description">
+    <div class="col-sm-12 company-list-wrp">
+      <div class="white-box">
+        <div class="list-eng-wrp">
+          <div class="list-title-search">
+            <span class="pull-left h4">
+              <select name="division_id" class="form-control inline" [(ngModel)]="divisionId"
+                (change)="divisionSelected($event.target.value)">
+                <option value=''>All</option>
+                <option *ngFor="let division of company.divisions" [value]="division.id">
+                  {{division.name}}
+                </option>
+              </select>
+              &nbsp;
+              <select name="product_id" class="form-control inline" [(ngModel)]="productId"
+                (change)="productSelected($event.target.value)">
+                <option value=''>All</option>
+                <ng-template ngFor let-product [ngForOf]='products'>
+                  <option [value]="product.id" *ngIf="!product.archived">
+                    {{product.name}}
+                  </option>
+                </ng-template>
+              </select>
+              <button type="button" class="btn btn-primary" (click)="setChecked()">Set Checked</button>
+              <button type="button" class="btn btn-primary" (click)="setCheckedToApproved()" [disabled]="approving">Set to Approved</button>
+            </span>
+            <span class="pull-right h4">
+              <select name="nomination_type" class="form-control inline" [(ngModel)]="nominationType"
+                (change)="nominationTypeSelected($event.target.value)">
+                <option value=''>All</option>
+                <option value='ren'>Renominations</option>
+                <option value='new'>New Nominations</option>
+              </select>
+              &nbsp;
+              <select name="contract_status" class="form-control inline" [(ngModel)]="contractStatus"
+                (change)="contractStatusSelected($event.target.value)">
+                <option value=''>All</option>
+                <option value='all_no_declined'>All but Declined</option>
+                <option value='all_no_denied_declined'>All but Denied or Declined</option>
+                <option value='pending_approval'>Pending Approval</option>
+                <option value='in_progress'>In Progress</option>
+                <option value='awaiting'>Awaiting Contract</option>
+                <option value='denied'>Denied</option>
+                <option value='pending_esif'>Pending eSIF</option>
+                <option value='esif_enova_review'>eSIF eNOVA Review</option>
+                <option value='pending_debarment_review'>Pending Debarment Review</option>
+                <option value='debarment_escalation'>Debarment Escalation</option>
+                <option value='awaiting_manager'>Awaiting Manager</option>
+                <option value='awaiting_marketing'>Awaiting Marketing</option>
+                <option value='awaiting_medical'>Awaiting Medical</option>
+                <option value='awaiting_legal'>Awaiting Legal</option>
+                <option value='awaiting_classification'>Awaiting Classification</option>
+                <option value='contract_redline'>Contract Redline</option>
+                <option value='awaiting_speaker_signature'>Awaiting Speaker Signature</option>
+                <option value='awaiting_countersignature'>Awaiting Countersignature</option>
+                <option value='active'>Active</option>
+                <option value='declined'>Declined</option>
+              </select>
+              <button type="button" class="btn btn-primary" (click)="onNominateSpeaker()">Nominate Speaker</button>
+              <button type="button" class="btn btn-primary" (click)="onExport()">Export</button>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+          <div class="li-en-table">
+            <table id="myTable" class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>
+                    <div class="checkbox m-t-0 m-b-0">
+                      <input name="checklist-all" type="checkbox" (change)="checkAll($event.target.checked)">
+                      <label for="checklist-all"></label>
+                    </div>
+                  </th>
+                  <th>Name</th>
+                  <th width="100px">Degree</th>
+                  <th>Tier</th>
+                  <th>Specialty</th>
+                  <th width="250px">Affiliation</th>
+                  <th>Location</th>
+                  <th width="100px">Product(s)</th>
+                  <th>YTD</th>
+                  <th>Contract Status</th>
+                  <th></th>
+                  <th width="200px">R/N</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contact of contacts;index as i">
+                  <td>
+                    <div class="checkbox m-t-0 m-b-0">
+                      <input name="checklist-{{i}}" type="checkbox" [(ngModel)]="checkedContacts[contact.id]">
+                      <label for="checklist-{{i}}"></label>
+                    </div>
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="editSubmission(i)">
+                      {{contact.last_name}}, {{contact.first_name}}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="editSubmission(i)">
+                      {{contact.degrees}}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="editSubmission(i)">{{contact.speaker_level?.label}}</a>
+                  </td>
+                  <td><a href="javascript:void(0);"
+                      (click)="editSubmission(i)">{{contact.specialties}}</a>
+                  </td>
+                  <td><a href="javascript:void(0);"
+                      (click)="editSubmission(i)">{{contact.office?.affiliation}}</a></td>
+                  <td><a href="javascript:void(0);" (click)="editSubmission(i)">{{contact.office?.city}},
+                      {{contact.office?.state}}</a></td>
+                  <td><a href="javascript:void(0);" (click)="editSubmission(i)">
+                      <div *ngFor="let p of contact.products">
+                        {{productMap[p.product_id]?.name}}
+                      </div>
+                    </a>
+                  </td>
+                  <td>{{contact.ytd}}</td>
+                  <td>
+                    <i class="fa fa-flag text-danger" *ngIf="contact.npi_flag"></i>
+                    <i class="fa fa-flag text-primary" *ngIf="contact.ein_flag"></i>
+                    <a href="javascript:void(0);"
+                      (click)="editSubmission(i)">{{contact.contract_status_id | titlize}}</a></td>
+                  <td>
+                    <a href="{{contact.cv}}" class="btn btn-danger btn-sm" *ngIf="contact.cv">CV</a>
+                  </td>
+                  <td>
+                    &nbsp;&nbsp;
+                    {{contact.salesforces && contact.salesforces.length ? 'R' : 'N'}}
+                    &nbsp;&nbsp;
+                    <a href="javascript:void(0);" *ngIf="!contact.clicked && isManagable(contact.contract_status_id)"
+                      class="btn btn-success m-r-10" title="Approve" (click)="approveSubmission(contact)"><i
+                        class="fa fa-check"></i></a>
+                    <span class="h3">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <a href="javascript:void(0);" *ngIf="!contact.clicked && isManagable(contact.contract_status_id)"
+                      class="btn btn-default" title="Decline" (click)="declineSubmission(contact)"><i
+                        class="fa fa-times"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

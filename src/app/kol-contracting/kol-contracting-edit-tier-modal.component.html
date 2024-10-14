@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Edit KOL Contracting - Tier</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="max-height: 500px; overflow: auto;">
+    <form #contactTierForm="ngForm" (ngSubmit)="contactTierForm.form.valid && onSubmit()">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                Name: {{contact | fullName}}, {{contact.degrees}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group m-b-10">
+                <label for="specialties">Specialty</label>
+                <select name="specialties" [(ngModel)]="contact.specialties[0]" (change)="resetRates()" class="form-control">
+                  <option></option>
+                  <option [ngValue]="speakerSpecialty.value" *ngFor="let speakerSpecialty of speakerSpecialties">
+                    {{speakerSpecialty.value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group m-b-10">
+                <label for="speaker_level_id">Tier</label>
+                <select name="speaker_level_id" [(ngModel)]="contact.speaker_level_id" (change)="resetRates()" class="form-control">
+                  <option></option>
+                  <option [ngValue]="level.id" *ngFor="let level of speakerLevels">{{level.label}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group m-b-10">
+                <label for="speaker_level_id">Contract Status</label>
+                <select name="contract_status_id" [(ngModel)]="contact.contract_status_id" class="form-control">
+                  <option [ngValue]="status.id" *ngFor="let status of contractStatuses">{{status.label}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="contact.id">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Rate Card</label>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th *ngFor="let col of rateCols">{{col.name}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of rateRows;index as i">
+                      <td>{{row.name}}</td>
+                      <td *ngFor="let col of rateCols;index as j">
+                        <input type="number" name="rate-{{i}}-{{j}}" [(ngModel)]="rateRow(row)[col.id]" class="form-control" style="width:100px" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="!contactTierForm.form.valid">Update</button>
+      </div>
+    </form>
+  </div>

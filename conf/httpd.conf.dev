@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+  ServerName contract.barkani.com
+  Redirect / https://contract.barkani.com/
+ </VirtualHost>
+
+<VirtualHost *:443>
+  ServerName contract.barkani.com
+  DocumentRoot "/var/www/sites/omni.barkani.com/dev/kolcontracting/dist"
+  <Directory /var/www/sites/omni.barkani.com/dev/kolcontracting/dist>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+
+  RewriteEngine On
+  # If an existing asset or directory is requested go to it as it is
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+  RewriteRule ^ - [L]
+  # If the requested resource doesn't exist, use index.html
+  RewriteCond %{REQUEST_URI}    !^/api/.*
+  RewriteRule ^ /index.html
+
+  SSLEngine on
+  SSLCertificateFile      /etc/letsencrypt/live/contract.barkani.com/cert.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/contract.barkani.com/chain.pem
+  SSLCertificateKeyFile   /etc/letsencrypt/live/contract.barkani.com/privkey.pem
+</VirtualHost>

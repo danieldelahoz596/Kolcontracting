@@ -1,0 +1,54 @@
+.tools-menu {
+	width: 345px;
+  position: fixed;
+  height: calc(100vh - 80px);
+  background: #fff;
+  padding: 15px;
+}
+.manage-txt {
+	color: #595959;
+	font-weight: bold;
+	font-size: 16px;
+}
+.scrollbar-wrp ul {
+  list-style-type: none;
+  padding: 0;
+}
+.scrollbar-wrp ul li {
+  border-bottom: 1px solid #eaecee!important;
+  width: 100%;
+  padding-bottom: 5px;
+  position: relative;
+  padding: 2px 0px;
+}
+.scrollbar-wrp ul li a {
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 0px;
+  color: #858585;
+  text-decoration: none;
+  padding: 6px 12px;
+}
+li:before {
+	content: ""!important;
+  background: #2f323e;
+  width: 20px!important;
+  height: 20px;
+  border-radius: 3px;
+  display: inline-block;
+  float: none!important;
+  position: relative;
+  top: 5px;
+}
+li:after {
+	content: "";
+	font-family: Material Design Icons;
+	position: absolute;
+  left: 2px;
+  top: 7px;
+  color: #fff;
+  font-size: 16px;
+}
+li:after {
+	content: "\F3ED";
+}

@@ -1,0 +1,60 @@
+<div class="right-icon-wrp">
+  <div class="event-description">
+
+    <div class="col-sm-12 company-list-wrp">
+      <div class="white-box">
+        <div class="list-eng-wrp">
+          <div class="list-title-search">
+            <h3 class="pull-left">
+              List of Contacts
+            </h3>
+            <span class="pull-right">
+              <button type="button" class="btn btn-primary" (click)="onSubmit()">Update</button>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="li-en-table">
+            <table id="myTable" class="table table-striped ajax-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Specialty</th>
+                  <th>Affiliation</th>
+                  <th>City</th>
+                  <th>State</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="contacts?.length != 0">
+                <tr *ngFor="let contact of contacts;index as i" class="owner-details">
+                  <td>
+                    <div class="checkbox m-t-0 m-b-0">
+                      <input type="checkbox" [checked]="selectedContacts[contact.id]"
+                        (change)="toggleContact(contact.id)">
+                      <label>&nbsp;</label>
+                    </div>
+                  </td>
+                  <td><b>{{contact.last_name}}</b></td>
+                  <td><b>{{contact.first_name}}</b></td>
+                  <td>{{contact.specialties}}</td>
+                  <td>{{contact.office?.affiliation}}</td>
+                  <td>{{contact.office?.city}}</td>
+                  <td>{{contact.office?.state}}</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="contacts?.length == 0">
+                <tr>
+                  <td colspan="12" align="center">No matching records found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

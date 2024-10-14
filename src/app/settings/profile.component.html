@@ -1,0 +1,52 @@
+<div class="right-icon-wrp">
+  <div class="event-description">
+    <div class="tool-ri-0 m-t-20">
+      <div class="tool-ri-1">
+        <app-settings-menu></app-settings-menu>
+      </div>
+      <div class="tool-ri-2 list-eng-wrp">
+        <div class="white-box tools-wrp-main">
+          <h1>Profile</h1>
+          <div class="m-t-30" *ngIf="user">
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <label class="hoverable" for="fileInput">
+                  <img src="{{newPhoto || user.photo}}" *ngIf="newPhoto || user.photo" class="img-circle-140">
+                  <div class="default-img-140" *ngIf="!newPhoto && !user.photo">{{user | nameChars}}</div>
+                  <div class="hover-text">Choose file</div>
+                  <div class="background"></div>
+                </label>
+                <input id="fileInput" type='file' (change)="onSelectPhoto($event)">
+                <button type="button" *ngIf="newPhoto" class="btn btn-danger" (click)="clearPhoto()">Clear</button>
+                <div class="form-group">
+                  <h4>Name</h4>
+                  {{user | fullName}}
+                </div>
+                <div class="form-group">
+                  <h4>Title</h4>
+                  {{user.title}}
+                </div>
+                <div class="form-group">
+                  <h4>Email</h4>
+                  {{user.email}}
+                </div>
+                <div class="form-group">
+                  <h4>Cell Phone</h4>
+                  <input type="text" name="cell_phone" [(ngModel)]="user.cell_phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <h4>Password</h4>
+                  ********
+                  <a routerLink="/settings/change-password"><i class="fa fa-pencil"></i></a>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary" (click)="updateProfile()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

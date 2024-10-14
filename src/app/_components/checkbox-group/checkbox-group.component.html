@@ -1,0 +1,4 @@
+<div class="checkbox m-r-10" *ngFor="let option of options" [ngClass]="{'inline': inline}">
+  <input type="checkbox" [checked]="isChecked(getValue(option))" (change)="toggleCheck(getValue(option))">
+  <label>{{getLabel(option)}}</label>
+</div>

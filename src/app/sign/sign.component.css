@@ -1,0 +1,12 @@
+::ng-deep html {
+  height: 100%;
+}
+
+::ng-deep body {
+  height: 100%;
+}
+
+.company-list-wrp {
+  margin-top: 0px;
+  padding: 80px 10px 10px 10px;
+}

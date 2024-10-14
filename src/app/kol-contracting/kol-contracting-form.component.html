@@ -1,0 +1,205 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title cohost-pop">
+      Contact Information
+    </h4>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group m-b-10">
+          <label for="salutation">Salutation</label>
+          <select name="salutation" [(ngModel)]="contact.salutation" class="form-control">
+            <option [value]="salutation.value" *ngFor="let salutation of salutations">{{salutation.value}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group m-b-10">
+          <label for="first_name">First Name</label>
+          <input name="first_name" [(ngModel)]="contact.first_name" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="middle_name">Middle Name</label>
+          <input name="middle_name" [(ngModel)]="contact.middle_name" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="last_name">Last Name</label>
+          <input name="last_name" [(ngModel)]="contact.last_name" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="degrees">Credentials</label>
+          <input name="degrees" [(ngModel)]="contact.degrees[0]" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="title">Title</label>
+          <input name="title" [(ngModel)]="contact.title" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group m-b-10">
+          <label for="affiliation">Office Affiliation</label>
+          <input name="affiliation" [(ngModel)]="contact.office.affiliation" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="department">Office Department</label>
+          <input name="department" [(ngModel)]="contact.office.department" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="address1">Office Address 1</label>
+          <input name="address1" [(ngModel)]="contact.office.address1" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="address2">Office Address 2</label>
+          <input name="address2" [(ngModel)]="contact.office.address2" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="city">Office City</label>
+          <input name="city" [(ngModel)]="contact.office.city" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="state">Office State</label>
+          <select name="state" class="form-control" [(ngModel)]="contact.office.state" *ngIf="states">
+            <ng-template ngFor let-state [ngForOf]="states">
+              <option [value]="state.code" *ngIf="state.country_id == 1">{{state.name}}</option>
+            </ng-template>
+          </select>
+        </div>
+        <div class="form-group m-b-10">
+          <label for="zip">Office Zip</label>
+          <input name="zip" [(ngModel)]="contact.office.zip" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group m-b-10">
+          <label for="phone">Office Phone</label>
+          <input name="phone" [(ngModel)]="contact.office.phone" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="cell_phone">Cell Phone</label>
+          <input name="cell_phone" [(ngModel)]="contact.cell_phone" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="fax">Office Fax</label>
+          <input name="fax" [(ngModel)]="contact.office.fax" class="form-control">
+        </div>
+        <div class="form-group m-b-10">
+          <label for="email">Email</label>
+          <input name="email" [(ngModel)]="contact.office.email" class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title cohost-pop">
+      CV Upload and Bureau Type
+    </h4>
+  </div>
+  <div class="panel-body">
+    <table>
+      <tr>
+        <td><label for="cv">CV</label></td>
+        <td>
+          <a href="{{contact.cv}}" class="m-l-10" *ngIf="contact.cv"><i class="fa fa-download"></i></a>
+          <a href="javascript:void(0)" class="m-l-10" *ngIf="contact.cv" (click)="onFileRemove('cv')"><i
+              class="fa fa-times"></i></a>
+          <input name="cv" (change)="onCVChange($event)" type="file">
+        </td>
+      </tr>
+      <tr>
+        <td><label for="speaker_product_exprience">Speaker has experience using the product?</label></td>
+        <td>
+          <select name="speaker_product_exprience" [(ngModel)]="contact.meta.speaker_product_exprience"
+            class="form-control">
+            <option></option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Unsure">Unsure</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="speaker_product_message">Speaker can efficiently deliver product message?</label>
+        </td>
+        <td>
+          <select name="speaker_product_message" [(ngModel)]="contact.meta.speaker_product_message"
+            class="form-control">
+            <option></option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Unsure">Unsure</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="speaker_not_referred">Speaker is not being referred to speak based on volume of
+            RX's</label></td>
+        <td>
+          <div class="checkbox">
+            <input type="checkbox" name="speaker_not_referred" [(ngModel)]="contact.meta.speaker_not_referred">
+            <label for="speaker_not_referred"></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Division(s)</label></td>
+        <td>
+          <app-checkbox-group name="divisions" [(ngModel)]="contact.submission_recommended_divisions"
+            [options]="divisions">
+          </app-checkbox-group>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Product(s)</label></td>
+        <td>
+          <app-checkbox-group name="products" [(ngModel)]="contact.submission_recommended_products"
+            [options]="products">
+          </app-checkbox-group>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="specialties">Specialty</label></td>
+        <td>
+          <select name="specialties" [(ngModel)]="contact.specialties[0]" class="form-control">
+            <option></option>
+            <option [ngValue]="speakerSpecialty.value" *ngFor="let speakerSpecialty of speakerSpecialties">
+              {{speakerSpecialty.value}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="subspecialty">Subspecialty</label></td>
+        <td>
+          <input type="text" name="subspecialty" [(ngModel)]="contact.subspecialty" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="speaker_level_id">Speaker Level</label>
+        </td>
+        <td>
+          <select name="speaker_level_id" [(ngModel)]="contact.speaker_level_id" class="form-control">
+            <option></option>
+            <option [ngValue]="level.id" *ngFor="let level of speakerLevels">{{level.label}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="fmv_exception">FMV Exception</label>
+        </td>
+        <td>
+          <div class="checkbox form-group">
+            <input type="checkbox" name="fmv_exception" [(ngModel)]="contact.fmv_exception">
+            <label for="fmv_exception"></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>

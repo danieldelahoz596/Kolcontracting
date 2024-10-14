@@ -1,0 +1,90 @@
+.login-box {
+    background: #fff;
+    width: 400px;
+    margin: 10% auto 0;
+}
+.login-sidebar {
+    position: absolute;
+    right: 0;
+    margin-top: 0;
+    height: 100%;
+}
+#wrapper {
+    width: 100%;
+}
+.white-box {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+.text-center {
+    text-align: center;
+}
+.form-material .form-group {
+    overflow: hidden;
+}
+.form-material .form-control {
+    background-color: rgba(0,0,0,0);
+    background-position: center bottom,center calc(99%);
+    background-repeat: no-repeat;
+    background-size: 0 2px,100% 1px;
+    padding: 0;
+    transition: background 0s ease-out 0s;
+    border-bottom: 2px solid transparent!important;
+    background-image: linear-gradient(#2cabe3,#2cabe3),linear-gradient(rgba(120,130,140,.13),rgba(120,130,140,.13));
+}
+.form-material .form-control.focus, .form-material .form-control:focus {
+    border-color: #707cd2!important;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    float: none;
+}
+.login-register .form-control {
+    display: block;
+    width: 100%;
+    line-height: 1.42857143;
+    border: 0;
+    box-shadow: inherit!important;
+    transition: inherit!important;
+    outline: none!important;
+    height: 38px;
+    max-width: 100%;
+    padding: 0px!important;
+    font-size: 14px;
+    font-weight: 100;
+}
+.m-t-40 {
+    margin-top: 40px!important;
+}
+.form-group, .form-horizontal .form-group {
+    margin-bottom: 25px;
+}
+.login-register .btn-info {
+    color: #fff;
+    background-color: #2cabe3;
+    border-color: #2cabe3;
+    text-transform: uppercase;
+    width: 100%;
+    padding: 8.5px 16px;
+    font-size: 18px;
+}
+#loginform .db {
+	display: inline-block;
+    width: 100%;
+}
+ .checkbox {
+    margin: 0;
+    margin-top: 6px;
+    color:#404040;
+}
+.checkbox input[type=checkbox]:checked+label::before {
+    background-color: #27b2ab;
+    border-color: #27b2ab;
+}
+.checkbox label::after {
+    color:#fff;
+}
+.checkbox label {
+    font-size: 12px;
+}

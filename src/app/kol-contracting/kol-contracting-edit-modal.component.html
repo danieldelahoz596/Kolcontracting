@@ -1,0 +1,401 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{contact | fullName}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" style="max-height: 700px; overflow: auto;">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#general-tab">General Information</a></li>
+    <li><a data-toggle="tab" href="#esif-tab">eSIF</a></li>
+    <li><a data-toggle="tab" href="#validation-tab">Validation</a></li>
+    <li><a data-toggle="tab" href="#tiering-tab">Tiering</a></li>
+    <li><a data-toggle="tab" href="#contract-tab">Contract</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="general-tab" class="tab-pane fade in active">
+      <form #contactForm="ngForm" (ngSubmit)="contactForm.form.valid && onSubmit()">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group m-b-10">
+              <label for="salutation">Salutation</label>
+              <select name="salutation" [(ngModel)]="contact.salutation" class="form-control">
+                <option [value]="salutation.value" *ngFor="let salutation of salutations">{{salutation.value}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="first_name">First Name</label>
+              <input name="first_name" [(ngModel)]="contact.first_name" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="middle_name">Middle Name</label>
+              <input name="middle_name" [(ngModel)]="contact.middle_name" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="last_name">Last Name</label>
+              <input name="last_name" [(ngModel)]="contact.last_name" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="degrees">Credentials</label>
+              <input name="degrees" [(ngModel)]="contact.degrees[0]" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="title">Title</label>
+              <input name="title" [(ngModel)]="contact.title" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="specialties">Specialty</label>
+              <select name="specialties" [(ngModel)]="contact.specialties[0]" class="form-control">
+                <option></option>
+                <option [ngValue]="speakerSpecialty.value" *ngFor="let speakerSpecialty of speakerSpecialties">
+                  {{speakerSpecialty.value}}</option>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="subspecialty">Subspecialty</label>
+              <input type="text" name="subspecialty" [(ngModel)]="contact.subspecialty" class="form-control" />
+            </div>
+            <div class="form-group m-b-10">
+              <label for="speaker_level_id">Speaker Level</label>
+              <select name="speaker_level_id" [(ngModel)]="contact.speaker_level_id" class="form-control">
+                <option></option>
+                <option [ngValue]="level.id" *ngFor="let level of speakerLevels">{{level.label}}</option>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contract_status_id">Contract Status</label>
+              <select name="contract_status_id" [(ngModel)]="contact.contract_status_id" class="form-control">
+                <option [ngValue]="status.id" *ngFor="let status of contractStatuses">{{status.label}}</option>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="agreement_template">Contract Type</label>
+              <select name="agreement_template" [(ngModel)]="contact.agreement_template" class="form-control">
+                <option></option>
+                <option [ngValue]="agreementTemplate.value" *ngFor="let agreementTemplate of agreementTemplates">
+                  {{agreementTemplate.value}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group m-b-10">
+              <label for="affiliation">Office Affiliation</label>
+              <input name="affiliation" [(ngModel)]="contact.office.affiliation" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="department">Office Department</label>
+              <input name="department" [(ngModel)]="contact.office.department" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="address1">Office Address 1</label>
+              <input name="address1" [(ngModel)]="contact.office.address1" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="address2">Office Address 2</label>
+              <input name="address2" [(ngModel)]="contact.office.address2" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="city">Office City</label>
+              <input name="city" [(ngModel)]="contact.office.city" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="state">Office State</label>
+              <select name="state" class="form-control" [(ngModel)]="contact.office.state" *ngIf="states">
+                <ng-template ngFor let-state [ngForOf]="states">
+                  <option [value]="state.code" *ngIf="state.country_id == 1">{{state.name}}</option>
+                </ng-template>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="zip">Office Zip</label>
+              <input name="zip" [(ngModel)]="contact.office.zip" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="phone">Office Phone</label>
+              <input name="phone" [(ngModel)]="contact.office.phone" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="cell_phone">Cell Phone</label>
+              <input name="cell_phone" [(ngModel)]="contact.cell_phone" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="fax">Office Fax</label>
+              <input name="fax" [(ngModel)]="contact.office.fax" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="email">Email</label>
+              <input name="email" [(ngModel)]="contact.office.email" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="npi_no">NPI #</label>
+              <input name="npi_no" [(ngModel)]="contact.npi_no" class="form-control">
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="npi_flag" [(ngModel)]="contact.npi_flag">
+              <label for="npi_flag">NPI Flag</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="ein_flag" [(ngModel)]="contact.ein_flag">
+              <label for="ein_flag">W9 Flag</label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.address1">NPI Address 1</label>
+              <input name="contact.npi_registry.address1" [(ngModel)]="contact.npi_registry.address1"
+                class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.address2">NPI Address 2</label>
+              <input name="contact.npi_registry.address2" [(ngModel)]="contact.npi_registry.address2"
+                class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.city">NPI City</label>
+              <input name="contact.npi_registry.city" [(ngModel)]="contact.npi_registry.city" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.state">NPI State</label>
+              <select name="contact.npi_registry.state" class="form-control" [(ngModel)]="contact.npi_registry.state">
+                <ng-template ngFor let-state [ngForOf]="states">
+                  <option [value]="state.code" *ngIf="state.country_id == 1">{{state.name}}</option>
+                </ng-template>
+              </select>
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.zip">NPI Zip</label>
+              <input name="contact.npi_registry.zip" [(ngModel)]="contact.npi_registry.zip" class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.taxonomy">NPI Taxonomy</label>
+              <input name="contact.npi_registry.taxonomy" [(ngModel)]="contact.npi_registry.taxonomy"
+                class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.license">NPI License</label>
+              <input name="contact.npi_registry.license" [(ngModel)]="contact.npi_registry.license"
+                class="form-control">
+            </div>
+            <div class="form-group m-b-10">
+              <label for="contact.npi_registry.license_state">NPI License State</label>
+              <select name="contact.npi_registry.license_state" class="form-control"
+                [(ngModel)]="contact.npi_registry.license_state">
+                <ng-template ngFor let-state [ngForOf]="states">
+                  <option [value]="state.code" *ngIf="state.country_id == 1">{{state.name}}</option>
+                </ng-template>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid">Update</button>
+        </div>
+      </form>
+    </div>
+    <div id="esif-tab" class="tab-pane fade">
+      <div class="row">
+        <div class="col-sm-12" *ngIf="esifForm">
+          <a href="{{esifDataPdf}}" *ngIf="esifDataPdf">Download Origial eSIF</a>
+          <app-esif-form-control [component]="component" [index]="0" [values]="esifData" [errors]="esifFormErrors"
+            [adminFlags]="esifFormAdminFlags" [speaker]="contact" [office]="contact.office" [states]="states"
+            [speakerSpecialties]="speakerSpecialties" [speakerSubSpecialties]="speakerSubSpecialties"
+            *ngFor="let component of esifForm">
+          </app-esif-form-control>
+          <div *ngIf="isStaffCanAccount()">
+            <button type="button" class="btn btn-primary" (click)="onUpdateEsif()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="validation-tab" class="tab-pane fade">
+      <form #contactTierForm="ngForm" (ngSubmit)="contactTierForm.form.valid && onSubmit()">
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="form-group m-b-10 inline">
+              <label for="contract_status_id">Contract Status</label>
+              <select name="contract_status_id" [(ngModel)]="contact.contract_status_id" class="form-control">
+                <option [ngValue]="status.id" *ngFor="let status of contractStatuses">{{status.label}}</option>
+              </select>
+            </div>
+            <div class="form-group m-b-10 inline m-l-10">
+              <label for="agreement_template">Contract Type</label>
+              <select name="agreement_template" [(ngModel)]="contact.agreement_template" class="form-control">
+                <option></option>
+                <option [ngValue]="agreementTemplate.value" *ngFor="let agreementTemplate of agreementTemplates">
+                  {{agreementTemplate.value}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <br />
+            <button type="submit" class="btn btn-primary" [disabled]="!contactTierForm.form.valid">Update</button>
+          </div>
+        </div>
+      </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>By</th>
+            <th>Documentation</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let type of validationTypes;index as i">
+            <ng-template [ngIf]="!validations[i].editing">
+              <td [ngClass]="{'red-txt': validations[i].status_id === 'fail'}">{{type.label}}</td>
+              <td [ngClass]="{'red-txt': validations[i].status_id === 'fail'}">
+                <div *ngFor="let validationStatus of validationStatuses">
+                  {{validations[i].status_id === validationStatus.id ? validationStatus.label : ''}}
+                </div>
+              </td>
+              <td [ngClass]="{'red-txt': validations[i].status_id === 'fail'}">
+                {{validations[i].validated_at | date: 'MM/dd/yyyy'}}
+              </td>
+              <td [ngClass]="{'red-txt': validations[i].status_id === 'fail'}">{{validations[i].user | fullName}}</td>
+              <td [ngClass]="{'red-txt': validations[i].status_id === 'fail'}">
+                <div *ngFor="let f of validations[i].files;index as j">
+                  <a href="javascript:void(0)" (click)="downloadValidationFile(f)">{{f.filename}}</a>
+                  <br />
+                </div>
+              </td>
+              <td><a href="javascript:void(0);" *ngIf="isStaffCanAccount() && isEditableValidation(type)"
+                  (click)="onEditValidation(i)"><i class="fa fa-pencil"></i></a></td>
+            </ng-template>
+            <ng-template [ngIf]="validations[i].editing">
+              <td>{{type.label}}</td>
+              <td>
+                <select name="status-{{i}}" [(ngModel)]="validations[i].status_id" class="form-control"
+                  (change)="resetContractStatus(validations[i])">
+                  <option [ngValue]="validationStatus.id" *ngFor="let validationStatus of validationStatuses">
+                    {{validationStatus.label}}</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" name='validated_at-{{i}}' [(ngModel)]="validations[i].validated_at"
+                  class="form-control" placeholder="Date" bsDatepicker>
+              </td>
+              <td></td>
+              <td>
+                <input type="file" name="file" (change)="onFileChange(i, $event)"><br />
+                <span *ngFor="let f of validations[i].files;index as j">
+                  {{f.filename}} <a href="javascript:void(0)" (click)="deleteValidationFile(validations[i], j)"><i
+                      class="fa fa-times"></i></a>
+                  <br />
+                </span>
+              </td>
+              <td><a href="javascript:void(0);" (click)="onSaveValidation(i)"><i class="fa fa-save"></i></a></td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:none;" [ngClass]="{'hidden': !esifFormId}">
+        <h3>W9</h3>
+        <div class="row">
+          <div class="col-sm-4">
+            <input type="file" class="form-control" class="dropify" accept=".pdf" name="w9" #w9FileInput data-height="100">
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-primary" (click)="onUpdateW9()">Update</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>Notes</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Note</th>
+                <th>Date</th>
+                <th>By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let note of validationNotes">
+                <td>{{note.comment}}</td>
+                <td>{{note.created_at | date: 'MM/dd/yyyy'}}</td>
+                <td>{{note.user | fullName}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea name="note-comment" class="form-control" [(ngModel)]="newValidationNote.comment"></textarea>
+                </td>
+                <td colspan="2">
+                  <button type="button" class="btn btn-primary" (click)="onAddNote()">Add</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="tiering-tab" class="tab-pane fade">
+      <form #contactTierForm="ngForm" (ngSubmit)="contactTierForm.form.valid && onSubmitRates()">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group m-b-10">
+              <label for="specialties">Specialty</label>
+              <select name="specialties" [(ngModel)]="contact.specialties[0]" (change)="resetRates()"
+                class="form-control">
+                <option></option>
+                <option [ngValue]="speakerSpecialty.value" *ngFor="let speakerSpecialty of speakerSpecialties">
+                  {{speakerSpecialty.value}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group m-b-10">
+              <label for="speaker_level_id">Tier</label>
+              <select name="speaker_level_id" [(ngModel)]="contact.speaker_level_id" (change)="resetRates()"
+                class="form-control">
+                <option></option>
+                <option [ngValue]="level.id" *ngFor="let level of speakerLevels">{{level.label}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <br />
+            <button type="submit" class="btn btn-primary" [disabled]="!contactTierForm.form.valid">Update</button>
+          </div>
+        </div>
+        <div class="row" *ngIf="contact.id">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Rate Card</label>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th *ngFor="let col of rateCols">{{col.name}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of rateRows;index as i">
+                    <td>{{row.name}}</td>
+                    <td *ngFor="let col of rateCols;index as j">
+                      <input type="number" name="rate-{{i}}-{{j}}" [(ngModel)]="rateRow(row)[col.id]"
+                        class="form-control" style="width:100px" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div id="contract-tab" class="tab-pane fade">
+      <a href="javascript:void(0)" (click)="downloadAgreement(contact.agreements[0])" *ngIf="contact.agreements.length"
+        class="btn btn-info btn-sm">Download</a>
+      <h5 *ngIf="!contact.agreements.length">A contract has not been created</h5>
+      <a *ngIf="!contact.agreements.length" href="javascript:void(0)" (click)="generateAgreement()">Download Merged
+        Template</a>
+    </div>
+  </div>
+</div>

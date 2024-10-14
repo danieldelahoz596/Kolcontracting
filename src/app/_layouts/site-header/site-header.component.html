@@ -1,0 +1,49 @@
+<div class="inner-fixed" [ngClass]="{'height-auto': heightAuto}">
+
+  <!--HEADER SECTION STARTS HERE-->
+  <nav class="navbar navbar-default navbar-static-top m-b-0">
+    <div class="navbar-header">
+      <!-- LOGO SECTION STARTS HERE -->
+      <div class="top-left-part">
+        <a class="logo menu-logo" href="javascript:void(0);" title="Radius Direct EMS"> <span><img
+              src="assets/img/menuicon.png" alt="Radius Direct EMS" class="light-logo" /> </span> </a>
+        <a class="logo desktop-logo" href="javascript:void(0);" title="Radius Direct EMS"> <span class="hidden-xs">
+            <img src="assets/img/logo.jpg" alt="Radius Direct EMS" class="light-logo" /> </span> </a>
+      </div>
+      <!-- LOGO SECTION ENDS HERE -->
+
+      <!-- LEFT TOPBAR MENU SECTION STARTS HERE -->
+      <ul class="nav navbar-top-links text-center" *ngIf="company">
+        <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs" title="menu"><i
+              class="ti-close ti-menu"></i></a></li>
+        <a routerLink="/"><img src="{{company.image}}" alt="{{company.name}}" style="margin-left: -40px;height: 60px;"></a>
+        <li class="dropdown pull-right" *ngIf="showLogout && user">
+          <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="javascript:void(0)">
+            <img src="{{user.photo}}" alt="user-img" width="36" *ngIf="user.photo" class="img-circle"><b
+              class="hidden-xs">{{user | fullName}}</b><span class="caret"></span> </a>
+          <ul class="dropdown-menu dropdown-user animated flipInY">
+            <li>
+              <div class="dw-user-box">
+                <div class="u-img" *ngIf="user.photo"><img src="{{user.photo}}" alt="user" /></div>
+                <div class="u-text">
+                  <h4>{{user | fullName}}</h4>
+                  <p class="text-muted" style="word-break: break-word; max-width:150px;">{{user.email}}</p>
+                  <a class="dropdown-toggle fa fa-close close-btn" title="close" data-toggle="dropdown"
+                    href="javascript:void(0)"></a>
+                </div>
+              </div>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li><a routerLink="/settings/profile" title="Account Setting"><i class="ti-settings"></i> Account
+                Setting</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="javascript:void(0)" (click)="logout()" title="Logout"><i class="fa fa-power-off"></i>
+                Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- LEFT TOPBAR MENU SECTION ENDS HERE -->
+    </div>
+  </nav>
+  <!--HEADER SECTION ENDS HERE-->
+</div>

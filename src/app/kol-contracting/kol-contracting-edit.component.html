@@ -1,0 +1,30 @@
+<div class="right-icon-wrp">
+  <div class="event-description">
+
+    <div class="col-sm-12 company-list-wrp">
+      <div class="white-box">
+        <div class="list-eng-wrp">
+          <div class="list-title-search">
+            <h3 class="pull-left">
+              Nominate a New Speaker
+            </h3>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="li-en-table p-20">
+            <form #contactForm="ngForm" class="form-inline" (ngSubmit)="contactForm.form.valid && onSubmit()">
+              <app-kol-contracting-form [contact]="contact" [salutations]="salutations" [speakerLevels]="speakerLevels"
+                [speakerSpecialties]="speakerSpecialties" [states]="states" [files]="files" [divisions]="divisions"
+                [products]="products"></app-kol-contracting-form>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

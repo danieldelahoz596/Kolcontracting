@@ -1,0 +1,172 @@
+<div *ngIf="component.type === 'section'" [ngClass]="{'hidden': !isVisible()}">
+  <h2 *ngIf="component.label">{{component.label}}</h2>
+  <p>
+    <ng-template ngFor let-object let-i="index" [ngForOf]="objects">
+      <app-esif-form-control [component]="child" [values]="values" [errors]="errors" [adminFlags]="adminFlags"
+        [index]="i" [speaker]="speaker" [office]="office" [states]="states" [speakerSpecialties]="speakerSpecialties"
+        [speakerSubSpecialties]="speakerSubSpecialties" *ngFor="let child of component.children">
+      </app-esif-form-control>
+    </ng-template>
+  </p>
+  <p>
+    <button type="button" class="btn btn-primary" *ngIf="component.multiple" (click)="addObject()">+</button>
+  </p>
+</div>
+<div *ngIf="component.type === 'subsection'" [ngClass]="{'hidden': !isVisible()}" style="padding-left: 20px;">
+  <h5 *ngIf="component.label">{{component.label}}</h5>
+  <p>
+    <ng-template ngFor let-object let-i="index" [ngForOf]="objects">
+      <app-esif-form-control [component]="child" [values]="values" [errors]="errors" [adminFlags]="adminFlags"
+        [index]="i" [speaker]="speaker" [office]="office" [states]="states" [speakerSpecialties]="speakerSpecialties"
+        [speakerSubSpecialties]="speakerSubSpecialties" *ngFor="let child of component.children">
+      </app-esif-form-control>
+      <div class="p-b-10 b-b m-b-10">
+        <button type="button" class="btn btn-danger" *ngIf="component.multiple && i > 0" (click)="removeObject()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </ng-template>
+  </p>
+  <p>
+    <button type="button" class="btn btn-primary" *ngIf="component.multiple" (click)="addObject()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </p>
+</div>
+
+<h4 *ngIf="component.type === 'HEADER'" [ngClass]="{'hidden': !isVisible()}">
+  {{component.label}}
+</h4>
+<p *ngIf="component.type === 'PARAGRAPH'" [ngClass]="{'hidden': !isVisible()}">
+  {{component.label}}
+</p>
+<div *ngIf="isSelect()" class="form-group" [ngClass]="{'hidden': !isVisible(),'has-error': hasError()}">
+  <label [for]="key">{{component.label}}</label>
+  <select [id]="key" class="form-control" [(ngModel)]="values[key]" (change)="selectionChanged($event.target.value)">
+    <option *ngFor="let value of selectValues()" [value]="value">
+      {{value}}
+    </option>
+  </select>
+</div>
+<div *ngIf="component.type === 'STATE'" class="form-group" [ngClass]="{'hidden': !isVisible(),'has-error': hasError()}">
+  <label [for]="key">{{component.label}}</label>
+  <select [id]="key" class="form-control" [(ngModel)]="values[key]" (change)="selectionChanged($event.target.value)">
+    <ng-template ngFor let-state [ngForOf]="states">
+      <option [value]="state.code" *ngIf="state.country_id == 1">{{state.name}}</option>
+    </ng-template>
+  </select>
+</div>
+<div *ngIf="component.type === 'MULTIPLE_CHECKBOX'" class="form-group" [ngClass]="{'hidden': !isVisible()}">
+  <ng-template ngFor let-value let-i="index" [ngForOf]="component.values">
+    <label class="checkbox-inline">
+      <input type="checkbox" [(ngModel)]="values[key + i]">
+      {{value}}
+    </label>&nbsp;
+  </ng-template>
+</div>
+<div *ngIf="component.type === 'TEXT_FIELD'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label [for]="key">
+    {{einSelected() ? 'Business ' : ''}}{{component.label}}
+    <i class="fa fa-flag text-danger" *ngIf="isAdminFlags()"></i>
+  </label>
+  <input type="text" class="form-control" [id]="key" [(ngModel)]="values[key]">
+</div>
+<div *ngIf="component.type === 'TEXT_FIELD_WITH_NA'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label [for]="key">{{component.label}}</label>
+  <input type="text" class="form-control" [id]="key" [(ngModel)]="values[key]">
+  <label class="checkbox-inline m-l-10">
+    <input type="checkbox" value="n/a" [(ngModel)]="values[na_key]">
+    N/A
+  </label>
+</div>
+<div *ngIf="component.type === 'COMMENTS'" class="form-group" [ngClass]="{'hidden': !isVisible()}">
+  <label [for]="key">{{component.label}}</label>
+  <textarea [id]="key" class="form-control" [(ngModel)]="values[key]"></textarea>
+</div>
+<div *ngIf="component.type === 'YN'" class="form-group" [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label [for]="key" class="m-r-10">{{component.label}}</label>
+  <label class="radio-inline" *ngFor="let value of ['Yes', 'No'];index as i">
+    <input type="radio" name="{{key}}" id="key_{{i}}" [value]="value" [(ngModel)]="values[key]"> {{value}}
+  </label>
+</div>
+
+<div *ngIf="component.type === 'MULTIPLE_RADIO'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasError(), 'inline': component.inline}">
+  <label [for]="key" class="m-r-10">{{component.label}}</label>
+  <ng-template ngFor let-value [ngForOf]='component.values'>
+    <label class="radio-inline">
+      <input type="radio" [name]="key" [value]="value" [(ngModel)]="values[key]"> {{value}}
+    </label>
+    <br *ngIf="component.multiline" />
+  </ng-template>
+</div>
+<div *ngIf="component.type === 'RADIO'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label class="radio-inline">
+    <input type="radio" [name]="key" [value]="component.value" [(ngModel)]="values[key]"
+      (change)="radioSelected($event.value)">
+    {{component.label || component.value}}
+  </label>
+</div>
+<div *ngIf="component.type === 'DATE'" class="form-group" [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label [for]="key">{{component.label}}</label>
+  <input type="text" [name]="key" [(ngModel)]="values[key]" class="form-control datetimepicker" bsDatepicker>
+</div>
+<div *ngIf="component.type === 'FILE'" class="form-group" [ngClass]="{'hidden': !isVisible(), 'has-error': hasError()}">
+  <label [for]="key">{{component.label}}</label>
+  <div *ngIf="values[key]"><a href="javascript:void(0);" (click)="download(values[key])">{{values[key].name}}
+    </a></div>
+  <input type="file" name="key" class="form-control dropify" (change)="onFileChange($event)" />
+</div>
+<div *ngIf="component.type === 'SSN'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasErrors(3)}">
+  <label>{{component.label}}</label>
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '0']" size="3"
+    maxlength="3">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '1']" size="2"
+    maxlength="2">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '2']" size="4"
+    maxlength="4">
+</div>
+<div *ngIf="component.type === 'SSN_CONFIRM'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasErrors(3)}">
+  <label>{{component.label}}</label>
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '0']" size="3"
+    maxlength="3">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '1']" size="2"
+    maxlength="2">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '2']" size="4"
+    maxlength="4">
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+</div>
+<div *ngIf="component.type === 'EIN'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasErrors(2)}">
+  <label>{{component.label}}</label>
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '0']" size="2"
+    maxlength="2">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '1']" size="7"
+    maxlength="7">
+</div>
+<div *ngIf="component.type === 'EIN_CONFIRM'" class="form-group"
+  [ngClass]="{'hidden': !isVisible(), 'has-error': hasErrors(2)}">
+  <label>{{component.label}}</label>
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '0']" size="2"
+    maxlength="2">
+  -
+  <input type="text" class="text-right" class="form-control inline" [(ngModel)]="values[key + '1']" size="7"
+    maxlength="7">
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+</div>
+<p *ngIf="component.type === 'BUTTON_GENERATE_W9'" [ngClass]="{'hidden': !isVisible()}">
+  <button type="button" class="btn btn-info" (click)="generateW9()" *ngIf="!values.w9_signed_at">{{component.label}}</button>
+  <span *ngIf="values.w9_signed_at">W9 has been received.<br /></span>
+  <span *ngIf="values.w9"><a href="javascript:void(0);" (click)="downloadW9(values.w9)" class="btn btn-success">Download W9</a><br /></span>
+</p>
+<br *ngIf="component.multiline" [ngClass]="{'hidden': !isVisible()}" />

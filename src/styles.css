@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+img.user-photo {
+  width: 69px;
+}
+
+.nowrap {
+white-space: nowrap;
+}
+
+.modal-title {
+color: #ffffff;
+padding-left: 10px;
+}
+
+.inline {
+display: inline-block !important;
+width: auto !important;
+}
+
+.form-control.inline {
+float: none;
+}
+
+.li-en-table {
+  height: auto !important;
+  padding: 20px;
+}
+
+.inner-fixed {
+  height: 60px !important;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+.inner-fixed.height-auto {
+  height: auto !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.modal-xl {
+	width: 1300px;
+}

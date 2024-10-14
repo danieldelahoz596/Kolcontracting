@@ -1,0 +1,60 @@
+.default-img-140 {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  border-radius: 100%;
+  background: #2cabe3;
+  color: #ffffff;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.img-circle-140 {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  border-radius: 100%;
+}
+.form-group {
+  margin: 10px 0px;
+}
+.hoverable{
+  position: relative;
+  display: block;
+  cursor: pointer;
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+}
+.hoverable .hover-text{
+  position: absolute;
+  display: none;
+  top: 50%;
+  left:  50%;
+  transform: translate(-50%,-50%);   
+  z-index: 2;
+}
+.hoverable .background{
+  position: absolute;
+  display: none;
+  top: 0;
+  left:  0;
+  bottom: 0;
+  right: 0;
+  background-color:rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+}
+.hoverable:hover .hover-text{
+  display: block;
+}
+.hoverable:hover .background{
+  display: block;
+}
+
+#fileInput{
+  display: none;
+}

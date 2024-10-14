@@ -1,0 +1,35 @@
+<form #submissionForm="ngForm" (ngSubmit)="submissionForm.form.valid && onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Set Checked to</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xs-4">
+          <label for="status">Status:</label>
+        </div>
+        <div class="col-xs-8">
+          <select name="action" class="form-control" [(ngModel)]="action" required>
+            <option value="approve">Approved</option>
+            <option value="decline">Denied</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <label for="tier">Tier:</label>
+        </div>
+        <div class="col-xs-8">
+          <select name="speaker_level_id" [(ngModel)]="speaker_level_id" class="form-control" required>
+            <option></option>
+            <option [ngValue]="level.id" *ngFor="let level of speakerLevels">{{level.label}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" [disabled]="!submissionForm.form.valid">Submit</button>
+    </div>
+  </form>

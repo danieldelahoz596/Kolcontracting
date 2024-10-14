@@ -1,0 +1,54 @@
+<app-site-header [company]="company" [heightAuto]="true"></app-site-header>
+<div class="right-icon-wrp full-height">
+  <div class="event-description full-height">
+    <div class="col-sm-12 company-list-wrp full-height">
+      <div class="white-box full-height">
+        <div class="list-eng-wrp full-height">
+          <div *ngIf="company && !status" class="full-height">
+            <iframe [src]="agreementUrl" width="100%" style="height: calc(100% - 150px);" frameborder="0">
+              This is an embedded
+              <a target='_blank' href='http://office.com'>Microsoft Office</a>
+              document, powered by
+              <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
+            </iframe>
+            <div class="p-20">
+              <table cellspacing="0" width="100%">
+                <tr>
+                  <td class="text-top text-right" width="50%">
+                    <label>Sign Here</label><br />
+                    <signature-pad [options]="signaturePadOptions"></signature-pad>
+                  </td>
+                  <td class="p-20 text-left" width="50%">
+                    <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                    &nbsp;&nbsp;
+                    <button type="button" class="btn btn-default pull-right" (click)="onDownload()">Download</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="isStatus('notAwaiting')">
+            <h2 class="text-center">There are no agreements awaiting your signature.</h2>
+          </div>
+          <div *ngIf="isStatus('thankyou')">
+            <h2 class="text-center">Thank you for completing the Salix Speaker Agreement. We look forward to your
+              participation in 2020.</h2>
+          </div>
+          <div *ngIf="isStatus('decline')">
+            <h2 class="text-center">
+              Are you sure you wish to decline?
+            </h2>
+            <p class="text-center">
+              <button type="button" class="btn btn-primary" (click)="onDecline()">Yes</button>
+              <button type="button" class="btn btn-default" (click)="onNoDecline()">No</button>
+            </p>
+          </div>
+          <div *ngIf="isStatus('declined')">
+            <h2 class="text-center">Thank you for notifying us. Your decision to decline has been recorded.</h2>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
